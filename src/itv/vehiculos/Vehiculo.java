@@ -8,6 +8,7 @@ public class Vehiculo {
 
     private static final char PERIODICA = 'P';
     private static final char REVISION = 'R';
+    private static TIPOS[] tipos = TIPOS.values();
 
     public enum TIPOS {
         MOTOCICLETA, TURISMO, CAMION, AUTOBUS;
@@ -17,7 +18,7 @@ public class Vehiculo {
         }
         public static String cadenaItems(){
             StringBuilder resultado = new StringBuilder("(");
-            TIPOS[] t=TIPOS.values();
+            TIPOS[] t= tipos;
             for (int i=0;i<t.length;i++){
                 resultado.append(i);
                 resultado.append(".-");
@@ -35,7 +36,11 @@ public class Vehiculo {
     private char inspeccion; // 'P' periodica- 'R' revisión
 
 
-    public Vehiculo(String matricula) { this(matricula,TIPOS.porDefecto().ordinal(), PERIODICA); }
+    public Vehiculo(String matricula) {
+        this(matricula, PERIODICA);
+    }
+
+    public Vehiculo(String matricula, char inspeccion) { this(matricula,TIPOS.porDefecto().ordinal(), inspeccion); }
 
     public Vehiculo(String matricula, int tipo, char inspeccion) {
         matricula=matricula.toUpperCase();
@@ -46,8 +51,8 @@ public class Vehiculo {
             throw  new IllegalArgumentException("¡Error!:Formato de Matrícula no válido.");
 
         TIPOS t=TIPOS.porDefecto();
-        if (tipo>=0 && tipo<TIPOS.values().length)
-            t=TIPOS.values()[tipo];
+        if (tipo>=0 && tipo< tipos.length)
+            t= tipos[tipo];
 
         char i= PERIODICA;
         if (inspeccion== REVISION)
@@ -76,8 +81,8 @@ public class Vehiculo {
     }
 
     public void setTipo(int tipo) {
-        if (tipo>=0 && tipo<TIPOS.values().length) // Si no dejamos el valor cargado
-            this.tipo=TIPOS.values()[tipo];
+        if (tipo>=0 && tipo< tipos.length) // Si no dejamos el valor cargado
+            this.tipo= tipos[tipo];
     }
 
     public void setInspeccion(char inspeccion) {
